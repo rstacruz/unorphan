@@ -11,8 +11,6 @@
 }(this, function () {
 
   return function unorphan(n) {
-    var i;
-
     if (!n) {
       return;
     }
@@ -30,18 +28,18 @@
     }
     // node list or jQuery object
     else if (n.length) {
-      for (i = 0, len = n.length; i < len; i++) {
+      for (var i = 0, len = n.length; i < len; i++) {
         unorphan(n[i]);
       }
     }
-
-    function lastNonSpaceChild(node) {
-      for (i = node.childNodes.length-1; i >= 0; i--) {
-        var sub = node.childNodes[i];
-        if (sub.nodeType !== 3 || !sub.nodeValue.match(/^\s*$/))
-          return sub;
-      }
-    }
   };
+
+  function lastNonSpaceChild(node) {
+    for (var i = node.childNodes.length-1; i >= 0; i--) {
+      var sub = node.childNodes[i];
+      if (sub.nodeType !== 3 || !sub.nodeValue.match(/^\s*$/))
+        return sub;
+    }
+  }
 
 }));
