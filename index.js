@@ -1,8 +1,11 @@
 module.exports = function unorphan(n) {
   var i;
 
+  if (!n) {
+    return;
+  }
   // string
-  if (typeof n === 'string') {
+  else if (typeof n === 'string') {
     unorphan(document.querySelectorAll(n));
   }
   // ELEMENT_NODE
