@@ -3,6 +3,8 @@
 See [Wikipedia](http://en.wikipedia.org/wiki/Widows_and_orphans) for a 
 description of text orphans.
 
+![](http://ricostacruz.com/unorphan/screenshot.png)
+
 ```js
 unorphan('h1, p');
 ```
