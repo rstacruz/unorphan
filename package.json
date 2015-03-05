@@ -1,0 +1,18 @@
+{
+  "name": "unorphan",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^2.1.1",
+    "jsdom": "^4.0.2",
+    "mocha": "^2.1.0",
+    "mocha-clean": "^0.4.0",
+    "mocha-jsdom": "^0.2.1"
+  }
+}
