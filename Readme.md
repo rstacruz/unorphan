@@ -6,6 +6,10 @@ Prevents text orphans.
 
 ![](http://ricostacruz.com/unorphan/screenshot.png)
 
+<br>
+
+## Usage
+
 ```js
 unorphan('h1, p');
 ```
