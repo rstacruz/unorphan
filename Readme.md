@@ -1,7 +1,8 @@
 # unorphan.js
 
-See [Wikipedia](http://en.wikipedia.org/wiki/Widows_and_orphans) for a 
-description of text orphans.
+Prevents text orphans.
+
+> *orphan* (n.) A word, part of a word, or very short line that appears by itself at the end of a paragraph. (via [Wikipedia](http://en.wikipedia.org/wiki/Widows_and_orphans))
 
 ![](http://ricostacruz.com/unorphan/screenshot.png)
 
