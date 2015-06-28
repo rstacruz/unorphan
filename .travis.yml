@@ -1,3 +1,4 @@
 language: node_js
+before_script: npm ls -depth 0
 node_js:
   - iojs
