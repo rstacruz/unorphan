@@ -2,7 +2,7 @@
   "name": "unorphan",
   "description": "Removes text orphans",
   "keywords": ["typography", "orphan", "unorphan", "widow"],
-  "authors": ["Rico Sta. Cruz <hi@ricostacruz.com>"],
+  "authors": ["Rico Sta. Cruz <rico@ricostacruz.com>"],
   "license": "MIT",
   "repository": {
     "type": "git",
