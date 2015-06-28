@@ -11,20 +11,20 @@ Prevents text orphans.
 ## Usage
 
 ```js
-unorphan('h1, p');
+unorphan('h1, p')
 ```
 
 Or pass on a node, or a list of nodes:
 
 ```js
 // Node
-unorphan(document.querySelector('#top-heading h1'));
+unorphan(document.querySelector('#top-heading h1'))
 
 // NodeList
-unorphan(document.querySelectorAll('h1, p'));
+unorphan(document.querySelectorAll('h1, p'))
 
 // jQuery
-unorphan($('h1, p'));
+unorphan($('h1, p'))
 ```
 
 <br>
