@@ -15,10 +15,10 @@
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^2.1.1",
-    "jsdom": "^4.0.2",
-    "mocha": "^2.1.0",
-    "mocha-jsdom": "^0.2.1",
+    "chai": "^3.0.0",
+    "jsdom": "^5.4.3",
+    "mocha": "^2.2.5",
+    "mocha-jsdom": "^0.5.0",
     "mocha-standard": "^0.1.0",
     "standard": "^4.4.0"
   },
