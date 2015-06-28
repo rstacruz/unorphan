@@ -1,4 +1,7 @@
 language: node_js
-before_script: npm ls -depth 0
+script:
+  - npm ls -depth 0
+  - npm test
+  - npm outdated
 node_js:
   - iojs
