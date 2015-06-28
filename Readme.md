@@ -6,6 +6,8 @@ Prevents text orphans.
 
 ![](http://ricostacruz.com/unorphan/screenshot.png)
 
+[![Status](https://travis-ci.org/rstacruz/unorphan.svg?branch=master)](https://travis-ci.org/rstacruz/unorphan "See test builds")
+
 <br>
 
 ## Usage
