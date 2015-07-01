@@ -12,6 +12,8 @@ Prevents text orphans.
 
 ## Usage
 
+Call `unorphan()` on some nodes. This will turn the last orphan space to an `&nbsp;` so the last 2 words won't break.
+
 ```js
 unorphan('h1, p')
 ```
@@ -27,6 +29,13 @@ unorphan(document.querySelectorAll('h1, p'))
 
 // jQuery
 unorphan($('h1, p'))
+```
+
+You may also unorphan before line breaks by passing `{ br: true }`.
+
+```js
+unorphan('h1, p', { br: true })
+// "4 Privet Drive<br>Little Whigging" => "4 Privet&nbsp;Drive<br>Little&nbsp;Whiggnig"
 ```
 
 <br>
