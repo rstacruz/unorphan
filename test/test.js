@@ -17,7 +17,7 @@ describe('eachTextNode', function () {
   var etn, res
 
   beforeEach(function () {
-    etn = unorphan.eachTextNode
+    etn = unorphan.reverseWalk
     res = []
   })
 
@@ -25,19 +25,23 @@ describe('eachTextNode', function () {
     div.innerHTML = '<b>hi there</b><i>mundo</i>'
     etn(div, function (node) { res.push(node) })
 
-    expect(res).have.length(2)
-    expect(res[0].nodeValue).eql('mundo')
-    expect(res[1].nodeValue).eql('hi there')
+    expect(res).have.length(4)
+    expect(res[0].nodeName).eql('I')
+    expect(res[1].nodeValue).eql('mundo')
+    expect(res[2].nodeName).eql('B')
+    expect(res[3].nodeValue).eql('hi there')
   })
 
   it('works when passed with elements and text', function () {
     div.innerHTML = '<b>hi there</b> <i>mundo</i>'
     etn(div, function (node) { res.push(node) })
 
-    expect(res).have.length(3)
-    expect(res[0].nodeValue).eql('mundo')
-    expect(res[1].nodeValue).eql(' ')
-    expect(res[2].nodeValue).eql('hi there')
+    expect(res).have.length(5)
+    expect(res[0].nodeName).eql('I')
+    expect(res[1].nodeValue).eql('mundo')
+    expect(res[2].nodeValue).eql(' ')
+    expect(res[3].nodeName).eql('B')
+    expect(res[4].nodeValue).eql('hi there')
   })
 
   it('works when passed with text', function () {
@@ -57,16 +61,17 @@ describe('eachTextNode', function () {
     })
 
     expect(res).have.length(1)
-    expect(res[0].nodeValue).eql('mundo')
+    expect(res[0].nodeName).eql('I')
   })
 })
 
 describe('simplified cases', function () {
-  function test (input, output) {
+  function test (input, output, options) {
     var msg = '"' + input + '" → "' + output + '"'
+    if (options) msg += ' ' + JSON.stringify(options)
     it(msg, function () {
       div.innerHTML = input
-      unorphan(div)
+      unorphan(div, options)
       expect(div.innerHTML).eql(output.replace(/_/g, '&nbsp;'))
     })
   }
@@ -98,6 +103,11 @@ describe('simplified cases', function () {
   test('x <b>y</b><i>   </i><b>z</b>', 'x <b>y</b><i>_</i><b>z</b>')
   test('x <b>y</b> <b>z</b> ', 'x <b>y</b>_<b>z</b> ')
   test('x <b>y</b>   <b>z</b> ', 'x <b>y</b>_<b>z</b> ')
+
+  describe('line breaks', function () {
+    test('a b<br>c d', 'a b<br>c_d')
+    test('a b<br>c d', 'a_b<br>c_d', { br: true })
+  })
 
   xdescribe('pending cases', function () {
     test('x <b> x</b> ', 'x_<b>_x</b> ')

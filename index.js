@@ -5,23 +5,24 @@ void (function (root, factory) {
   else root.unorphan = factory()
 }(this, function () {
 
+  var nbsp = '\xA0'
   var TEXT = 3
   var ELEMENT = 1
-  var nbsp = '\xA0'
 
-  unorphan.eachTextNode = eachTextNode
+  unorphan.reverseWalk = reverseWalk
   return unorphan
 
-  function unorphan (n) {
+  function unorphan (n, options) {
+    if (!options) options = {}
     if (!n) return
     if (typeof n === 'string') { /* selector string */
-      unorphan(document.querySelectorAll(n))
+      unorphan(document.querySelectorAll(n), options)
     } else if (n.nodeType === ELEMENT) {
-      unorphanElement(n)
+      unorphanElement(n, options)
     } else if (n.nodeType === TEXT) {
       n.nodeValue = n.nodeValue.replace(/\s+([^\s]*)\s*$/, nbsp + '$1')
     } else if (n.length) { /* node list or jQuery object */
-      for (var i = 0, len = n.length; i < len; i++) { unorphan(n[i]) }
+      for (var i = 0, len = n.length; i < len; i++) { unorphan(n[i], options) }
     }
   }
 
@@ -30,42 +31,50 @@ void (function (root, factory) {
    * eligible space it encounters to a non-breaking space.
    */
 
-  function unorphanElement (node) {
+  function unorphanElement (node, options) {
     // keep track if we've seen a non-space character yet.
-    var dirty
+    var dirty, done
 
-    eachTextNode(node, function (n) {
-      var text = n.nodeValue
+    reverseWalk(node, function (n) {
+      if (n.nodeType === TEXT && !done) {
+        var text = n.nodeValue
 
-      if (!dirty && /\s+[^\s]+\s*$/.test(text)) {
-        // " xx" or " xx " => "_xx" (done!)
-        n.nodeValue = text.replace(/\s+([^\s]+)\s*$/, nbsp + '$1')
-        return false
-      } else if (/^[^\s]+\s*$/.test(text)) {
-        // "xx " or "xx" => pass
-        dirty = true
-      } else if (/\s/.test(text) && dirty) {
-        // " "    => "_"
-        // "xx "  => "xx_"
-        // "xx x" => "xx_x" (done!)
-        n.nodeValue = text.replace(/\s+([^\s]*)$/, nbsp + '$1')
-        return false
+        if (!dirty && /\s+[^\s]+\s*$/.test(text)) {
+          // " xx" or " xx " => "_xx" (done!)
+          n.nodeValue = text.replace(/\s+([^\s]+)\s*$/, nbsp + '$1')
+          done = true
+          if (!options.br) return false
+        } else if (/^[^\s]+\s*$/.test(text)) {
+          // "xx " or "xx" => pass
+          dirty = true
+        } else if (/\s/.test(text) && dirty) {
+          // " "    => "_"
+          // "xx "  => "xx_"
+          // "xx x" => "xx_x" (done!)
+          n.nodeValue = text.replace(/\s+([^\s]*)$/, nbsp + '$1')
+          done = true
+          if (!options.br) return false
+        }
+      } else if (n.nodeType === ELEMENT) {
+        // Start over when encountering <br>
+        if (n.nodeName.toLowerCase() === 'br') done = false
       }
     })
   }
 
   /*
-   * Internal: iterates *backwards* through all available text subnodes.
-   * Abort by returning `false` on the block.
+   * Internal: iterates *backwards* through all available text and element
+   * subnodes. Abort by returning `false` on the block.
    */
 
-  function eachTextNode (node, fn) {
+  function reverseWalk (node, fn) {
     for (var i = node.childNodes.length - 1; i >= 0; i--) {
       var sub = node.childNodes[i]
       if (sub.nodeType === TEXT) {
         if (fn(sub) === false) return false
       } else if (sub.nodeType === ELEMENT) {
-        if (eachTextNode(sub, fn) === false) return false
+        if (fn(sub) === false) return false
+        if (reverseWalk(sub, fn) === false) return false
       }
     }
   }
