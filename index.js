@@ -14,16 +14,14 @@ void (function (root, factory) {
 
   function unorphan (n) {
     if (!n) return
-    if (typeof n === 'string') { /* string */
+    if (typeof n === 'string') { /* selector string */
       unorphan(document.querySelectorAll(n))
-    } else if (n.nodeType === ELEMENT) { /* element */
+    } else if (n.nodeType === ELEMENT) {
       unorphanElement(n)
-    } else if (n.nodeType === TEXT) { /* text node */
+    } else if (n.nodeType === TEXT) {
       n.nodeValue = n.nodeValue.replace(/\s+([^\s]*)\s*$/, nbsp + '$1')
     } else if (n.length) { /* node list or jQuery object */
-      for (var i = 0, len = n.length; i < len; i++) {
-        unorphan(n[i])
-      }
+      for (var i = 0, len = n.length; i < len; i++) { unorphan(n[i]) }
     }
   }
 
