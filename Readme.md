@@ -12,13 +12,10 @@ Prevents text orphans.
 
 ## Usage
 
-Call `unorphan()` on some nodes. This changes last orphan space to a [non-breaking space][nbsp] so the last 2 words stick together.
-
-[nbsp]: https://en.wikipedia.org/wiki/Non-breaking_space
+Call `unorphan()` on some nodes.
 
 ```js
 unorphan('h1, p')
-// '<h1>Hello there world</h1>' => '<h1>Hello there&nbsp;world</h1>'
 ```
 
 Or pass on a node, or a list of nodes:
@@ -34,11 +31,30 @@ unorphan(document.querySelectorAll('h1, p'))
 unorphan($('h1, p'))
 ```
 
-You may also unorphan before line breaks by passing `{ br: true }`.
+<br>
+
+**How does it work?** — This changes last orphan space to a [non-breaking space][nbsp] so the last 2 words stick together. Yes, it's [smart][test] and handles many edge cases.
+
+```html
+<!-- before: --> <h1>Hello there world</h1>
+<!--  after: --> <h1>Hello there&nbsp;world</h1>
+```
+
+[nbsp]: https://en.wikipedia.org/wiki/Non-breaking_space
+[test]: https://github.com/rstacruz/unorphan/blob/master/test/index/cases_test.js
+
+<br>
+
+**Line breaks** — You may also unorphan before line breaks by passing `{ br: true }`.
 
 ```js
 unorphan('h1, p', { br: true })
-// '4 Privet Drive<br>Little Whigging' => '4 Privet&nbsp;Drive<br>Little&nbsp;Whiggnig'
+```
+
+```html
+<p>4 Privet&nbsp;Drive<br>
+Little&nbsp;Whigging<br>
+Surrey</p>
 ```
 
 <br>
@@ -47,9 +63,10 @@ unorphan('h1, p', { br: true })
 
 ```
 npm install unorphan
+bower install unorphan
 ```
 
-[![npm version](http://img.shields.io/npm/v/unorphan.svg?style=flat)](https://npmjs.org/package/unorphan "View this project on npm")
+[![npm version](http://img.shields.io/npm/v/unorphan.svg)](https://npmjs.org/package/unorphan "View this project on npm")
 
 <br>
 
