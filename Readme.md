@@ -12,7 +12,9 @@ Prevents text orphans.
 
 ## Usage
 
-Call `unorphan()` on some nodes. This changes last orphan space to an `&nbsp;` so the last 2 words stick together.
+Call `unorphan()` on some nodes. This changes last orphan space to a [non-breaking space][nbsp] so the last 2 words stick together.
+
+[nbsp]: https://en.wikipedia.org/wiki/Non-breaking_space
 
 ```js
 unorphan('h1, p')
