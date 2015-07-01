@@ -1,4 +1,4 @@
-/* global before, beforeEach, describe, it, afterEach */
+/* global before, beforeEach, describe, it, afterEach, xdescribe */
 var expect = require('chai').expect
 
 require('mocha-jsdom')()
@@ -58,6 +58,49 @@ describe('eachTextNode', function () {
 
     expect(res).have.length(1)
     expect(res[0].nodeValue).eql('mundo')
+  })
+})
+
+describe('simplified cases', function () {
+  function test (input, output) {
+    var msg = '"' + input + '" → "' + output + '"'
+    it(msg, function () {
+      div.innerHTML = input
+      unorphan(div)
+      expect(div.innerHTML).eql(output.replace(/_/g, '&nbsp;'))
+    })
+  }
+
+  test('', '')
+  test(' ', ' ')
+  test('x', 'x')
+  test(' x', '_x')
+  test('  x', '_x')
+  test(' x ', '_x')
+  test('  x ', '_x')
+  test('x ', 'x ')
+  test('x y', 'x_y')
+  test('x y ', 'x_y')
+  test('x  y', 'x_y')
+  test('x  y ', 'x_y')
+  test('<b>x</b>', '<b>x</b>')
+  test('<b>x</b> ', '<b>x</b> ')
+  test('<b> x</b>', '<b>_x</b>')
+  test('<b> x</b> ', '<b>_x</b> ')
+  test(' <b> x</b> ', ' <b>_x</b> ')
+  test(' <b>  x</b> ', ' <b>_x</b> ')
+  test('x <b>y z</b>', 'x <b>y_z</b>')
+  test('x <b>y   z</b>', 'x <b>y_z</b>')
+  test('x y <b>z</b>', 'x y_<b>z</b>')
+  test('x y<b> </b>z', 'x y<b>_</b>z')
+  test('x <b>y</b> <b>z</b>', 'x <b>y</b>_<b>z</b>')
+  test('x <b>y</b><i> </i><b>z</b>', 'x <b>y</b><i>_</i><b>z</b>')
+  test('x <b>y</b><i>   </i><b>z</b>', 'x <b>y</b><i>_</i><b>z</b>')
+  test('x <b>y</b> <b>z</b> ', 'x <b>y</b>_<b>z</b> ')
+  test('x <b>y</b>   <b>z</b> ', 'x <b>y</b>_<b>z</b> ')
+
+  xdescribe('pending cases', function () {
+    test('x <b> x</b> ', 'x_<b>_x</b> ')
   })
 })
 

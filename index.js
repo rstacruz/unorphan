@@ -37,16 +37,15 @@ void (function (root, factory) {
     eachTextNode(node, function (n) {
       var text = n.nodeValue
 
-      if (!dirty && /^\s*$/.test(text)) {
-        // "  "  => pass
-      } else if (!dirty && /\s+[^\s]+\s*$/.test(text)) {
+      if (!dirty && /\s+[^\s]+\s*$/.test(text)) {
         // " xx" or " xx " => "_xx" (done!)
         n.nodeValue = text.replace(/\s+([^\s]+)\s*$/, nbsp + '$1')
         return false
       } else if (/^[^\s]+\s*$/.test(text)) {
         // "xx " or "xx" => pass
         dirty = true
-      } else if (/\s/.test(text)) {
+      } else if (/\s/.test(text) && dirty) {
+        // " "    => "_"
         // "xx "  => "xx_"
         // "xx x" => "xx_x" (done!)
         n.nodeValue = text.replace(/\s+([^\s]*)$/, nbsp + '$1')
