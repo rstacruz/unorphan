@@ -39,8 +39,8 @@ void (function (root, factory) {
       if (n.nodeType === TEXT && !paused) {
         var text = n.nodeValue
 
-        if (!dirty && /\s+[^\s]+\s*$/.test(text)) {
-          // " xx" or " xx " => "_xx" (paused!)
+        if (/\s+[^\s]+\s*$/.test(text) && !dirty) {
+          // " xx" or " xx " => "_xx" (done!)
           n.nodeValue = text.replace(/\s+([^\s]+)\s*$/, nbsp + '$1')
           if (!options.br) return false
           paused = true
@@ -50,7 +50,7 @@ void (function (root, factory) {
         } else if (/\s/.test(text) && dirty) {
           // " "    => "_"
           // "xx "  => "xx_"
-          // "xx x" => "xx_x" (paused!)
+          // "xx x" => "xx_x" (done!)
           n.nodeValue = text.replace(/\s+([^\s]*)$/, nbsp + '$1')
           if (!options.br) return false
           paused = true
