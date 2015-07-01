@@ -5,31 +5,70 @@ void (function (root, factory) {
   else root.unorphan = factory()
 }(this, function () {
 
-  return function unorphan (n) {
-    if (!n) {
-      return
-    } else if (typeof n === 'string') {
-      // string
+  var TEXT = 3
+  var ELEMENT = 1
+  var nbsp = '\xA0'
+
+  unorphan.eachTextNode = eachTextNode
+  return unorphan
+
+  function unorphan (n) {
+    if (!n) return
+    if (typeof n === 'string') { /* string */
       unorphan(document.querySelectorAll(n))
-    } else if (n.nodeType && n.nodeType === 1) {
-      // ELEMENT_NODE
-      unorphan(lastNonSpaceChild(n))
-    } else if (n.nodeType && n.nodeType === 3) {
-      // TEXT_NODE
-      n.nodeValue = n.nodeValue.replace(/\s+([^\s]+\s*)$/g, '\xA0$1')
-    } else if (n.length) {
-      // node list or jQuery object
+    } else if (n.nodeType === ELEMENT) { /* element */
+      unorphanElement(n)
+    } else if (n.nodeType === TEXT) { /* text node */
+      n.nodeValue = n.nodeValue.replace(/\s+([^\s]*)\s*$/, nbsp + '$1')
+    } else if (n.length) { /* node list or jQuery object */
       for (var i = 0, len = n.length; i < len; i++) {
         unorphan(n[i])
       }
     }
   }
 
-  function lastNonSpaceChild (node) {
+  /*
+   * Recursively checks text nodes in an element and replaces the first
+   * eligible space it encounters to a non-breaking space.
+   */
+
+  function unorphanElement (node) {
+    // keep track if we've seen a character yet.
+    var char
+
+    eachTextNode(node, function (n) {
+      var text = n.nodeValue
+
+      if (!char && /^\s*$/.test(text)) {
+        // "  "  => pass
+      } else if (!char && /\s+[^\s]+\s*$/.test(text)) {
+        // " xx" or " xx " => "_xx" (done!)
+        n.nodeValue = text.replace(/\s+([^\s]+)\s*$/, nbsp + '$1')
+        return false
+      } else if (/^[^\s]+\s*$/.test(text)) {
+        // "xx " or "xx" => pass
+        char = true
+      } else if (/\s/.test(text)) {
+        // "xx "  => "xx_"
+        // "xx x" => "xx_x" (done!)
+        n.nodeValue = text.replace(/\s+([^\s]*)$/, nbsp + '$1')
+        return false
+      }
+    })
+  }
+
+  /*
+   * Internal: iterates *backwards* through all available text subnodes.
+   * Abort by returning `false` on the block.
+   */
+
+  function eachTextNode (node, fn) {
     for (var i = node.childNodes.length - 1; i >= 0; i--) {
       var sub = node.childNodes[i]
-      if (sub.nodeType !== 3 || !sub.nodeValue.match(/^\s*$/)) {
-        return sub
+      if (sub.nodeType === TEXT) {
+        if (fn(sub) === false) return false
+      } else if (sub.nodeType === ELEMENT) {
+        if (eachTextNode(sub, fn) === false) return false
       }
     }
   }
