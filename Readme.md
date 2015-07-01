@@ -12,10 +12,11 @@ Prevents text orphans.
 
 ## Usage
 
-Call `unorphan()` on some nodes. This will turn the last orphan space to an `&nbsp;` so the last 2 words won't break.
+Call `unorphan()` on some nodes. This changes last orphan space to an `&nbsp;` so the last 2 words stick together.
 
 ```js
 unorphan('h1, p')
+// '<h1>Hello there world</h1>' => '<h1>Hello there&nbsp;world</h1>'
 ```
 
 Or pass on a node, or a list of nodes:
@@ -35,7 +36,7 @@ You may also unorphan before line breaks by passing `{ br: true }`.
 
 ```js
 unorphan('h1, p', { br: true })
-// "4 Privet Drive<br>Little Whigging" => "4 Privet&nbsp;Drive<br>Little&nbsp;Whiggnig"
+// '4 Privet Drive<br>Little Whigging' => '4 Privet&nbsp;Drive<br>Little&nbsp;Whiggnig'
 ```
 
 <br>
