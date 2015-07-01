@@ -1,3 +1,7 @@
+## [v1.2.0] - Jul  2, 2015
+
+* Add support for line breaks (`{ br: true }`).
+
 ## [v1.1.0] - Jul  2, 2015
 
 * Account for more cases, most notably `hello <b>world</b>`.
@@ -13,3 +17,4 @@ Initial release.
 
 [v1.0.1]: https://github.com/rstacruz/unorphan/compare/v1.0.0...v1.0.1
 [v1.1.0]: https://github.com/rstacruz/unorphan/compare/v1.0.1...v1.1.0
+[v1.2.0]: https://github.com/rstacruz/unorphan/compare/v1.0.1...v1.2.0
