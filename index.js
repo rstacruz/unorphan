@@ -32,32 +32,35 @@ void (function (root, factory) {
    */
 
   function unorphanElement (node, options) {
-    // keep track if we've seen a non-space character yet.
-    var dirty, done
+    var dirty /* keep track if we've seen a non-space character yet */
+    var paused /* stop processing text nodes until the next <br> */
 
     reverseWalk(node, function (n) {
-      if (n.nodeType === TEXT && !done) {
+      if (n.nodeType === TEXT && !paused) {
         var text = n.nodeValue
 
         if (!dirty && /\s+[^\s]+\s*$/.test(text)) {
-          // " xx" or " xx " => "_xx" (done!)
+          // " xx" or " xx " => "_xx" (paused!)
           n.nodeValue = text.replace(/\s+([^\s]+)\s*$/, nbsp + '$1')
-          done = true
           if (!options.br) return false
-        } else if (/^[^\s]+\s*$/.test(text)) {
+          paused = true
+        } else if (/^[^\s]+\s*$/.test(text) && !dirty) {
           // "xx " or "xx" => pass
           dirty = true
         } else if (/\s/.test(text) && dirty) {
           // " "    => "_"
           // "xx "  => "xx_"
-          // "xx x" => "xx_x" (done!)
+          // "xx x" => "xx_x" (paused!)
           n.nodeValue = text.replace(/\s+([^\s]*)$/, nbsp + '$1')
-          done = true
           if (!options.br) return false
+          paused = true
         }
       } else if (n.nodeType === ELEMENT) {
         // Start over when encountering <br>
-        if (n.nodeName.toLowerCase() === 'br') done = false
+        if (n.nodeName.toLowerCase() === 'br') {
+          paused = false
+          dirty = false
+        }
       }
     })
   }

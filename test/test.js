@@ -107,6 +107,15 @@ describe('simplified cases', function () {
   describe('line breaks', function () {
     test('a b<br>c d', 'a b<br>c_d')
     test('a b<br>c d', 'a_b<br>c_d', { br: true })
+    test('a b<i><br>c</i> d', 'a b<i><br>c</i>_d')
+    test('a b<i><br>c</i> d', 'a_b<i><br>c</i>_d', { br: true })
+    test('a <i>b<br>c</i> d', 'a <i>b<br>c</i>_d')
+    test('a <i>b<br>c</i> d', 'a_<i>b<br>c</i>_d', { br: true })
+    test('a b<br><br>c d', 'a b<br><br>c_d')
+    test('a b<br><br>c d', 'a_b<br><br>c_d', { br: true })
+    test('a b<br>c d e<br>f g', 'a_b<br>c d_e<br>f_g', { br: true })
+    test('a b<br>c d e<br>f g h', 'a b<br>c d e<br>f g_h')
+    test('a b<br>c d e<br>f g h', 'a_b<br>c d_e<br>f g_h', { br: true })
   })
 
   xdescribe('pending cases', function () {
