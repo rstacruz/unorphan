@@ -33,21 +33,21 @@ void (function (root, factory) {
    */
 
   function unorphanElement (node) {
-    // keep track if we've seen a character yet.
-    var char
+    // keep track if we've seen a non-space character yet.
+    var dirty
 
     eachTextNode(node, function (n) {
       var text = n.nodeValue
 
-      if (!char && /^\s*$/.test(text)) {
+      if (!dirty && /^\s*$/.test(text)) {
         // "  "  => pass
-      } else if (!char && /\s+[^\s]+\s*$/.test(text)) {
+      } else if (!dirty && /\s+[^\s]+\s*$/.test(text)) {
         // " xx" or " xx " => "_xx" (done!)
         n.nodeValue = text.replace(/\s+([^\s]+)\s*$/, nbsp + '$1')
         return false
       } else if (/^[^\s]+\s*$/.test(text)) {
         // "xx " or "xx" => pass
-        char = true
+        dirty = true
       } else if (/\s/.test(text)) {
         // "xx "  => "xx_"
         // "xx x" => "xx_x" (done!)
