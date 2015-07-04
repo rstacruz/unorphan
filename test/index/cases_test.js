@@ -11,10 +11,15 @@ describe('simplified cases', function () {
   test('', '')
   test(' ', ' ')
   test('x', 'x')
-  test(' x', '_x')
-  test('  x', '_x')
-  test(' x ', '_x')
-  test('  x ', '_x')
+
+  // these fail in IE8. harmlessly, really
+  descibe('leading whitespace', function () {
+    test(' x', '_x')
+    test('  x', '_x')
+    test(' x ', '_x')
+    test('  x ', '_x')
+  })
+
   test('x ', 'x ')
   test('x y', 'x_y')
   test('x y ', 'x_y')
