@@ -13,7 +13,7 @@ describe('simplified cases', function () {
   test('x', 'x')
 
   // these fail in IE8. harmlessly, really
-  descibe('leading whitespace', function () {
+  describe('leading whitespace', function () {
     test(' x', '_x')
     test('  x', '_x')
     test(' x ', '_x')
