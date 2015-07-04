@@ -51,7 +51,7 @@ describe('simplified cases', function () {
   })
 
   xdescribe('pending cases', function () {
-    test('x <b> x</b> ', 'x_<b>_x</b> ')
+    test('x <b> x</b> ', 'x<b>_x</b> ')
   })
 })
 
@@ -61,6 +61,6 @@ function test (input, output, options) {
   it(msg, function () {
     div.innerHTML = input
     unorphan(div, options)
-    expect(div.innerHTML).eql(output.replace(/_/g, '&nbsp;'))
+    expect(div.innerHTML).toHtmlEqual(output.replace(/_/g, '&nbsp;'))
   })
 }

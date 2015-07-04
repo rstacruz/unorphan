@@ -19,31 +19,31 @@ describe('reverse walk', function () {
     div.innerHTML = '<b>hi there</b><i>mundo</i>'
     etn(div, function (node) { res.push(node) })
 
-    expect(res).have.length(4)
-    expect(res[0].nodeName).eql('I')
-    expect(res[1].nodeValue).eql('mundo')
-    expect(res[2].nodeName).eql('B')
-    expect(res[3].nodeValue).eql('hi there')
+    expect(res.length).toEqual(4)
+    expect(res[0].nodeName).toEqual('I')
+    expect(res[1].nodeValue).toEqual('mundo')
+    expect(res[2].nodeName).toEqual('B')
+    expect(res[3].nodeValue).toEqual('hi there')
   })
 
   it('works when passed with elements and text', function () {
     div.innerHTML = '<b>hi there</b> <i>mundo</i>'
     etn(div, function (node) { res.push(node) })
 
-    expect(res).have.length(5)
-    expect(res[0].nodeName).eql('I')
-    expect(res[1].nodeValue).eql('mundo')
-    expect(res[2].nodeValue).eql(' ')
-    expect(res[3].nodeName).eql('B')
-    expect(res[4].nodeValue).eql('hi there')
+    expect(res.length).toEqual(5)
+    expect(res[0].nodeName).toEqual('I')
+    expect(res[1].nodeValue).toEqual('mundo')
+    expect(res[2].nodeValue).toEqual(' ')
+    expect(res[3].nodeName).toEqual('B')
+    expect(res[4].nodeValue).toEqual('hi there')
   })
 
   it('works when passed with text', function () {
     div.innerHTML = 'hi there'
     etn(div, function (node) { res.push(node) })
 
-    expect(res).have.length(1)
-    expect(res[0].nodeValue).eql('hi there')
+    expect(res.length).toEqual(1)
+    expect(res[0].nodeValue).toEqual('hi there')
   })
 
   it('can be aborted', function () {
@@ -54,7 +54,7 @@ describe('reverse walk', function () {
       return false
     })
 
-    expect(res).have.length(1)
-    expect(res[0].nodeName).eql('I')
+    expect(res.length).toEqual(1)
+    expect(res[0].nodeName).toEqual('I')
   })
 })

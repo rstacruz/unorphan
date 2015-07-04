@@ -2,10 +2,11 @@
 
 if (typeof process === 'object') {
   require('mocha-jsdom')()
-  global.expect = require('chai').expect
+  global.expect = require('expect')
+  require('expect-html-equal')
   before(function () {
     global.unorphan = require('../index')
   })
 } else {
-  window.expect = window.chai.expect
+  window.require = function () { }
 }

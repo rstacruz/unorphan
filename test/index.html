@@ -9,7 +9,9 @@
 <body>
   <div id="mocha"></div>
   <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
-  <script src="https://cdn.rawgit.com/chaijs/chai/2.3.0/chai.js"></script>
+  <script src='https://cdn.rawgit.com/mjackson/expect/v1.6.0/dist/expect.min.js'></script>
+  <script src='https://cdn.rawgit.com/rstacruz/expect-html-equal/v1.0.0/index.js'></script>
+  <script>window.onerror=function(msg,url,line){document.getElementById('mocha').innerHTML+='<h1>'+msg+'</'+'h1>'+'<h2>'+url+':'+line+'</'+'h2>';return false}</script>
   <script>mocha.setup('bdd')</script>
   <script src="../index.js"></script>
   <script src="setup.js"></script>
