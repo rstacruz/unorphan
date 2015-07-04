@@ -14,6 +14,16 @@ describe('unorphan', function () {
     expect(div.innerHTML).toHtmlEqual('hello there&nbsp;world')
   })
 
+  it('can accept null', function () {
+    expect(unorphan(null)).toEqual(undefined)
+  })
+
+  it('works with text elements', function () {
+    var text = document.createTextNode('hello there world')
+    unorphan(text)
+    expect(text.nodeValue).toHtmlEqual('hello there&nbsp;world')
+  })
+
   it('works with html', function () {
     div.innerHTML = 'hello <b>there world</b>'
     unorphan(div)
