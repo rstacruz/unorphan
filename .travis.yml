@@ -1,6 +1,5 @@
 language: node_js
-after_script:
-  - npm ls -depth 0
-  - npm outdated
+script:
+  - npm run coverage
 node_js:
   - iojs

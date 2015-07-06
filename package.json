@@ -10,13 +10,15 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha -- -R spec"
   },
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
   "license": "MIT",
   "devDependencies": {
     "expect": "^1.6.0",
     "expect-html-equal": "^1.0.1",
+    "istanbul": "^0.3.17",
     "jsdom": "^5.4.3",
     "mocha": "^2.2.5",
     "mocha-jsdom": "^1.0.0",
