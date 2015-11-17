@@ -7,14 +7,14 @@
     "url": "https://github.com/rstacruz/unorphan/issues"
   },
   "devDependencies": {
-    "expect": "^1.6.0",
-    "expect-html-equal": "^1.0.1",
-    "istanbul": "^0.3.17",
-    "jsdom": "^5.4.3",
-    "mocha": "^2.2.5",
-    "mocha-jsdom": "^1.0.0",
-    "mocha-standard": "^1.0.0",
-    "standard": "^4.4.0"
+    "expect": "1.6.0",
+    "expect-html-equal": "1.0.1",
+    "istanbul": "0.3.17",
+    "jsdom": "5.4.3",
+    "mocha": "2.2.5",
+    "mocha-jsdom": "1.0.0",
+    "mocha-standard": "1.0.0",
+    "standard": "4.4.0"
   },
   "directories": {
     "test": "test"
