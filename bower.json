@@ -4,6 +4,7 @@
   "keywords": ["typography", "orphan", "unorphan", "widow"],
   "authors": ["Rico Sta. Cruz <rico@ricostacruz.com>"],
   "license": "MIT",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/rstacruz/unorphan.git"

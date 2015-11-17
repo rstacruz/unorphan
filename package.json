@@ -1,20 +1,11 @@
 {
   "name": "unorphan",
-  "version": "1.2.0",
   "description": "Obliterate text orphans",
-  "keywords": [
-    "typography",
-    "orphan",
-    "unorphan",
-    "widow"
-  ],
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha",
-    "coverage": "istanbul cover _mocha -- -R spec"
-  },
+  "version": "1.2.0",
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rstacruz/unorphan/issues"
+  },
   "devDependencies": {
     "expect": "^1.6.0",
     "expect-html-equal": "^1.0.1",
@@ -28,12 +19,21 @@
   "directories": {
     "test": "test"
   },
+  "homepage": "https://github.com/rstacruz/unorphan",
+  "keywords": [
+    "orphan",
+    "typography",
+    "unorphan",
+    "widow"
+  ],
+  "license": "MIT",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/rstacruz/unorphan.git"
   },
-  "bugs": {
-    "url": "https://github.com/rstacruz/unorphan/issues"
-  },
-  "homepage": "https://github.com/rstacruz/unorphan"
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec",
+    "test": "mocha"
+  }
 }
